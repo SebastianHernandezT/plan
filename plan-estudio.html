@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Estudios Personalizado — Matemáticas · Física · Programación</title>
+<style>
+  :root{
+    --math:#1e5fb4; --math-bg:#eaf1fb;
+    --phys:#12805c; --phys-bg:#e6f4ef;
+    --prog:#c2410c; --prog-bg:#fdece3;
+    --bridge:#7c3aed; --bridge-bg:#f3e8ff;
+    --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+    --warn:#b91c1c; --warn-bg:#fef2f2;
+    --ok:#065f46; --ok-bg:#ecfdf5;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); line-height:1.55; margin:0; background:#f8fafc;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:32px 24px 80px; background:#fff;}
+  header.top{
+    border-bottom:3px solid var(--ink); padding-bottom:18px; margin-bottom:28px;
+  }
+  header.top h1{margin:0 0 6px; font-size:1.85rem; letter-spacing:-0.02em;}
+  header.top p{margin:0; color:var(--muted); font-size:.95rem;}
+  h2{
+    font-size:1.35rem; margin-top:44px; padding:8px 0 6px;
+    border-bottom:2px solid var(--line);
+  }
+  h3{font-size:1.08rem; margin-top:28px; color:#111827;}
+  h4{font-size:.98rem; margin:18px 0 8px; color:#374151;}
+  .badge{
+    display:inline-block; padding:2px 9px; border-radius:999px;
+    font-size:.72rem; font-weight:600; letter-spacing:.02em; text-transform:uppercase;
+  }
+  .b-math{background:var(--math-bg); color:var(--math);}
+  .b-phys{background:var(--phys-bg); color:var(--phys);}
+  .b-prog{background:var(--prog-bg); color:var(--prog);}
+  .b-bridge{background:var(--bridge-bg); color:var(--bridge);}
+  table{
+    width:100%; border-collapse:collapse; margin:12px 0 24px;
+    font-size:.86rem; background:#fff;
+  }
+  th,td{
+    border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;
+  }
+  th{background:#f3f4f6; font-weight:600; font-size:.8rem; letter-spacing:.02em;}
+  tr:nth-child(even) td{background:#fafafa;}
+  table.math th{background:var(--math-bg); color:var(--math);}
+  table.phys th{background:var(--phys-bg); color:var(--phys);}
+  table.prog th{background:var(--prog-bg); color:var(--prog);}
+  table.bridge th{background:var(--bridge-bg); color:var(--bridge);}
+
+  /* ── Diagramas Mermaid ── */
+  .diagram-box{
+    background:#fafbff; border:1px solid var(--line); border-radius:10px;
+    padding:18px 12px; margin:14px 0 28px; overflow-x:auto;
+  }
+  .diagram-box .mermaid{
+    display:flex; justify-content:center; min-width:min-content;
+  }
+  .diagram-box .mermaid svg{
+    max-width:100%; height:auto;
+  }
+  .diagram-caption{
+    font-size:.82rem; color:var(--muted); text-align:center;
+    margin:6px 0 0; font-style:italic;
+  }
+
+  .callout{
+    border-left:4px solid var(--warn); background:var(--warn-bg);
+    padding:12px 16px; border-radius:0 6px 6px 0; margin:16px 0; font-size:.9rem;
+  }
+  .callout.ok{border-color:var(--ok); background:var(--ok-bg);}
+  .callout.info{border-color:var(--bridge); background:var(--bridge-bg);}
+  .callout strong{color:var(--warn);}
+  .callout.ok strong{color:var(--ok);}
+  .callout.info strong{color:var(--bridge);}
+  a{color:#1d4ed8; text-decoration:none; border-bottom:1px dotted #93c5fd;}
+  a:hover{color:#1e40af;}
+  .meta{font-size:.8rem; color:var(--muted);}
+  .toc{
+    background:#f9fafb; border:1px solid var(--line); border-radius:8px;
+    padding:14px 20px; margin:20px 0 32px; font-size:.9rem;
+  }
+  .toc ol{margin:6px 0 0 18px; padding:0;}
+  .toc li{margin:3px 0;}
+  .pill{
+    display:inline-block; background:#eef2ff; color:#3730a3;
+    padding:1px 8px; border-radius:6px; font-size:.75rem; font-weight:600;
+    margin-right:4px;
+  }
+  footer{
+    margin-top:60px; padding-top:16px; border-top:1px solid var(--line);
+    font-size:.8rem; color:var(--muted);
+  }
+  @media print{
+    body{background:#fff;}
+    .wrap{max-width:100%; padding:0;}
+    h2{page-break-after:avoid;}
+    table{page-break-inside:auto;}
+    tr{page-break-inside:avoid;}
+    a{color:#000; border:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Plan de Estudios Personalizado</h1>
+  <p>Matemáticas · Física · Programación/Computación &nbsp;|&nbsp; Nivel meta: avanzado de pregrado &nbsp;|&nbsp; 8–10 h/semana &nbsp;|&nbsp; 100% recursos abiertos y gratuitos</p>
+  <p class="meta">Versión 3 — diagramas Mermaid: flechas orientadas automáticamente y jerarquía calculada por el motor de grafos.</p>
+</header>
+
+<div class="toc">
+  <strong>Contenido</strong>
+  <ol>
+    <li><a href="#advertencias">Advertencias críticas</a></li>
+    <li><a href="#resumen">Tabla resumen por ruta y fase</a></li>
+    <li><a href="#secuencia">Diagramas por ruta (Mermaid)</a></li>
+    <li><a href="#diagrama">Diagrama integrado de dependencias</a></li>
+    <li><a href="#mensual">Plan mensual (primeros 24 meses)</a></li>
+    <li><a href="#catalogo">Catálogo de opciones por tema</a></li>
+    <li><a href="#proyectos">Proyectos prácticos</a></li>
+    <li><a href="#hitos">Hitos obligatorios</a></li>
+    <li><a href="#enlaces">Enlaces verificados</a></li>
+  </ol>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="advertencias">1. Advertencias críticas</h2>
+
+<div class="callout">
+  <strong>Tiempo real:</strong> desde aritmética hasta análisis real, mecánica cuántica y sistemas operativos,
+  llevando las <strong>tres rutas en paralelo a 8–10 h/semana</strong>, el rango realista es
+  <strong>6–8 años</strong>. Un pregrado completo equivale a ~4.800 h; este plan ronda las 2.500–3.200 h por
+  recortes (no cubre humanidades, laboratorios presenciales, ni toda la malla de una carrera). No hay atajos.
+</div>
+
+<div class="callout">
+  <strong>Hardware:</strong> con 4 GB de RAM (3.76 GB usables), los cursos <em>6.828 (xv6)</em> y
+  <em>6.824 (sistemas distribuidos)</em> son inviables. En este plan se sustituyen por
+  <em>6.033 Computer System Engineering</em>, mucho más ligero y con laboratorios factibles en tu equipo.
+</div>
+
+<div class="callout ok">
+  <strong>Certificados:</strong> todo el plan está diseñado sobre contenido <strong>100% gratuito</strong>.
+  Cuando un curso existe también en MITx/edX, el acceso al material es gratuito en modo <em>audit</em>;
+  el certificado es opcional y de pago. <strong>No condiciona el plan.</strong>
+</div>
+
+<div class="callout info">
+  <strong>Puentes añadidos en esta versión:</strong> se agregaron cursos y recursos que faltaban para que
+  las transiciones no tengan saltos: <em>demostraciones matemáticas</em> (antes de análisis real),
+  <em>física moderna puente</em> (antes de cuántica), <em>termodinámica clásica</em>, <em>C++</em> y
+  <em>redes</em>.
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="resumen">2. Tabla resumen por ruta y fase</h2>
+
+<h3><span class="badge b-math">Matemáticas</span></h3>
+<table class="math">
+  <thead>
+    <tr><th>Fase</th><th>Duración</th><th>Curso principal</th><th>Fuente</th><th>Prerrequisito</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>M0. Nivelación</strong></td><td>6–12 meses</td><td>Aritmética → Álgebra I → Álgebra II → Trigonometría</td><td>Khan Academy (gratis)</td><td>Ninguno</td></tr>
+    <tr><td><strong>M1. Cálculo I</strong></td><td>6 meses</td><td>18.01SC Single Variable Calculus</td><td>MIT OCW</td><td>M0</td></tr>
+    <tr><td><strong>M2. Cálculo II</strong></td><td>6 meses</td><td>18.02SC Multivariable Calculus</td><td>MIT OCW</td><td>18.01SC</td></tr>
+    <tr><td><strong>M3. Álgebra Lineal</strong></td><td>4 meses</td><td>18.06SC Linear Algebra</td><td>MIT OCW</td><td>18.02SC (recom.)</td></tr>
+    <tr><td><strong>M4. Ecuaciones Diferenciales</strong></td><td>4 meses</td><td>18.03 Differential Equations</td><td>MIT OCW</td><td>18.01 (prereq)</td></tr>
+    <tr><td><strong>M5. Probabilidad y Estadística</strong></td><td>4 meses</td><td>18.05 Introduction to Probability and Statistics</td><td>MIT OCW</td><td>18.02</td></tr>
+    <tr><td><strong>M6. Matemáticas Discretas</strong></td><td>4 meses</td><td>6.042J Mathematics for Computer Science</td><td>MIT OCW</td><td>M0–M1</td></tr>
+    <tr><td><strong>M6.5. Demostraciones</strong></td><td>2–3 meses</td><td>Book of Proof (Hammack) + How to Prove It (Velleman)</td><td>Gratis / Open</td><td>6.042J (o en paralelo)</td></tr>
+    <tr><td><strong>M7. Análisis Real</strong></td><td>6 meses</td><td>18.100A Real Analysis</td><td>MIT OCW</td><td>18.02 + M6 + M6.5</td></tr>
+    <tr><td><strong>M8. Álgebra Abstracta</strong></td><td>6 meses</td><td>18.701 Algebra I</td><td>MIT OCW</td><td>18.06 + M6.5</td></tr>
+    <tr><td><strong>M9. Métodos Numéricos</strong></td><td>3 meses</td><td>18.335J Introduction to Numerical Methods</td><td>MIT OCW</td><td>18.03, 18.06, programación</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="badge b-phys">Física</span></h3>
+<table class="phys">
+  <thead>
+    <tr><th>Fase</th><th>Duración</th><th>Curso principal</th><th>Fuente</th><th>Prerrequisito</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>F1. Mecánica Clásica</strong></td><td>6 meses</td><td>8.01SC Classical Mechanics</td><td>MIT OCW</td><td>18.01SC (correq.)</td></tr>
+    <tr><td><strong>F2. Electromagnetismo</strong></td><td>6 meses</td><td>8.02 Physics II: Electricity and Magnetism</td><td>MIT OCW</td><td>8.01, 18.02 (correq.)</td></tr>
+    <tr><td><strong>F3. Ondas y Vibraciones</strong></td><td>4 meses</td><td>8.03SC Physics III: Vibrations and Waves</td><td>MIT OCW</td><td>8.02, 18.03</td></tr>
+    <tr><td><strong>F3.5. Termodinámica</strong></td><td>3 meses</td><td>5.60 Thermodynamics &amp; Kinetics</td><td>MIT OCW / OpenStax</td><td>18.02</td></tr>
+    <tr><td><strong>F4. Física Estadística</strong></td><td>4 meses</td><td>8.044 Statistical Physics I</td><td>MIT OCW</td><td>8.03, 18.05</td></tr>
+    <tr><td><strong>F4.5. Física Moderna puente</strong></td><td>2–3 meses</td><td>8.04x (edX, audit) o OpenStax University Physics Vol. 3</td><td>edX / OpenStax</td><td>8.02, 8.03</td></tr>
+    <tr><td><strong>F5. Cuántica I</strong></td><td>6 meses</td><td>8.04 Quantum Physics I</td><td>MIT OCW</td><td>8.03, 18.03, 18.06, F4.5</td></tr>
+    <tr><td><strong>F6. Relatividad y Óptica</strong></td><td>3 meses</td><td>8.033 Relativity</td><td>MIT OCW</td><td>8.02, 8.04</td></tr>
+    <tr><td><strong>F7. Cuántica II</strong></td><td>6 meses</td><td>8.05 Quantum Physics II</td><td>MIT OCW</td><td>8.04</td></tr>
+    <tr><td><strong>F8. Mecánica Avanzada</strong></td><td>6 meses</td><td>8.09 Classical Mechanics II</td><td>MIT OCW</td><td>8.03, 18.03</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="badge b-prog">Programación / Computación</span></h3>
+<table class="prog">
+  <thead>
+    <tr><th>Fase</th><th>Duración</th><th>Curso principal</th><th>Fuente</th><th>Prerrequisito</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>P0. Fundamentos + Python</strong></td><td>3 meses</td><td>6.0001 Introduction to CS and Programming in Python</td><td>MIT OCW</td><td>Ninguno</td></tr>
+    <tr><td><strong>P1. C y memoria</strong></td><td>3 meses</td><td>CS50x (semanas 1–5: C, memoria)</td><td>Harvard (gratis)</td><td>P0</td></tr>
+    <tr><td><strong>P1.5. C++</strong></td><td>3 meses</td><td>LearnCpp.com (curso completo) + C++ Core Guidelines</td><td>LearnCpp (gratis)</td><td>P1</td></tr>
+    <tr><td><strong>P2. Estructuras y Algoritmos</strong></td><td>6 meses</td><td>6.006 Introduction to Algorithms</td><td>MIT OCW</td><td>P0, 6.042J (correq.)</td></tr>
+    <tr><td><strong>P3. Sistemas</strong></td><td>4 meses</td><td>6.033 Computer System Engineering</td><td>MIT OCW</td><td>P1, P2</td></tr>
+    <tr><td><strong>P3.5. Redes</strong></td><td>3 meses</td><td>6.02 Introduction to EECS II</td><td>MIT OCW / YouTube</td><td>P3</td></tr>
+    <tr><td><strong>P4. Bases de Datos y SQL</strong></td><td>2 meses</td><td>CS50 SQL + Khan Academy SQL</td><td>Harvard/Khan (gratis)</td><td>P0</td></tr>
+    <tr><td><strong>P5. Algoritmos Avanzados</strong></td><td>4 meses</td><td>6.046J Design and Analysis of Algorithms</td><td>MIT OCW</td><td>6.006</td></tr>
+    <tr><td><strong>P6. IA y ML</strong></td><td>4 meses</td><td>6.034 Artificial Intelligence + 6.036 Introduction to ML</td><td>MIT OCW</td><td>P2, 18.05 <strong>+ 18.06</strong></td></tr>
+    <tr><td><strong>P7. Lenguajes adicionales</strong></td><td>Continuo</td><td>Rust · TypeScript · Java</td><td>Varios (gratis)</td><td>P2</td></tr>
+    <tr><td><strong>P8. Teoría de la Computación</strong></td><td>4 meses</td><td>18.404J Theory of Computation</td><td>MIT OCW</td><td>6.042J, 6.006</td></tr>
+  </tbody>
+</table>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="secuencia">3. Diagramas por ruta (Mermaid)</h2>
+<p class="meta">Cada diagrama respeta el orden real de prerrequisitos. Las flechas las calcula el motor de grafos, así que no hay cruces ambiguos ni líneas torcidas.</p>
+
+<h4><span class="badge b-math">Matemáticas</span></h4>
+<div class="diagram-box">
+<pre class="mermaid">
+graph TD
+  M0["M0 · Nivelación<br/>Khan Academy"]:::math
+  M1["M1 · 18.01SC<br/>Cálculo I"]:::math
+  M2["M2 · 18.02SC<br/>Cálculo II"]:::math
+  M3["M3 · 18.06SC<br/>Álgebra Lineal"]:::math
+  M4["M4 · 18.03<br/>Ecuaciones Diferenciales"]:::math
+  M5["M5 · 18.05<br/>Probabilidad y Estadística"]:::math
+  M6["M6 · 6.042J<br/>Matemáticas Discretas"]:::math
+  M65["M6.5 · Book of Proof<br/>Demostraciones"]:::bridge
+  M7["M7 · 18.100A<br/>Análisis Real"]:::math
+  M8["M8 · 18.701<br/>Álgebra Abstracta"]:::math
+  M9["M9 · 18.335J<br/>Métodos Numéricos"]:::math
+
+  M0 --> M1 --> M2
+  M2 --> M3
+  M2 --> M4
+  M2 --> M5
+  M2 --> M6
+  M6 --> M65
+  M65 --> M7
+  M65 --> M8
+  M3 --> M8
+  M3 --> M9
+  M4 --> M9
+
+  classDef math fill:#eaf1fb,stroke:#1e5fb4,color:#1e5fb4,stroke-width:1.5px
+  classDef bridge fill:#f3e8ff,stroke:#7c3aed,color:#7c3aed,stroke-width:1.5px
+</pre>
+</div>
+<p class="diagram-caption">M6.5 (demostraciones) es obligatorio antes de M7 y M8. No es opcional.</p>
+
+<h4><span class="badge b-phys">Física</span></h4>
+<div class="diagram-box">
+<pre class="mermaid">
+graph TD
+  M1["M1 · 18.01SC<br/>Cálculo I"]:::math
+  M2["M2 · 18.02SC<br/>Cálculo II"]:::math
+  M3["M3 · 18.06SC<br/>Álgebra Lineal"]:::math
+  M4["M4 · 18.03<br/>EDO"]:::math
+  M5["M5 · 18.05<br/>Probabilidad"]:::math
+
+  F1["F1 · 8.01SC<br/>Mecánica Clásica"]:::phys
+  F2["F2 · 8.02<br/>Electromagnetismo"]:::phys
+  F3["F3 · 8.03SC<br/>Ondas y Vibraciones"]:::phys
+  F35["F3.5 · 5.60<br/>Termodinámica"]:::phys
+  F4["F4 · 8.044<br/>Física Estadística"]:::phys
+  F45["F4.5 · 8.04x<br/>Física Moderna puente"]:::bridge
+  F5["F5 · 8.04<br/>Cuántica I"]:::phys
+  F6["F6 · 8.033<br/>Relatividad"]:::phys
+  F7["F7 · 8.05<br/>Cuántica II"]:::phys
+  F8["F8 · 8.09<br/>Mecánica Avanzada"]:::phys
+
+  M1 --> F1
+  M2 --> F2
+  F1 --> F2
+  F2 --> F3
+  F2 --> F35
+  M4 --> F3
+  M5 --> F4
+  F3 --> F4
+  F35 --> F4
+  F3 --> F45
+  F45 --> F5
+  M3 --> F5
+  F5 --> F6
+  F5 --> F7
+  F3 --> F8
+
+  classDef math fill:#eaf1fb,stroke:#1e5fb4,color:#1e5fb4,stroke-width:1.5px
+  classDef phys fill:#e6f4ef,stroke:#12805c,color:#12805c,stroke-width:1.5px
+  classDef bridge fill:#f3e8ff,stroke:#7c3aed,color:#7c3aed,stroke-width:1.5px
+</pre>
+</div>
+<p class="diagram-caption">F4.5 suaviza el salto entre 8.03 y 8.04. F3.5 cubre termodinámica clásica antes de estadística.</p>
+
+<h4><span class="badge b-prog">Programación</span></h4>
+<div class="diagram-box">
+<pre class="mermaid">
+graph TD
+  P0["P0 · 6.0001<br/>Python"]:::prog
+  P1["P1 · CS50x<br/>C y memoria"]:::prog
+  P15["P1.5 · LearnCpp<br/>C++"]:::prog
+  P2["P2 · 6.006<br/>Algoritmos"]:::prog
+  P3["P3 · 6.033<br/>Sistemas"]:::prog
+  P35["P3.5 · 6.02<br/>Redes"]:::prog
+  P4["P4 · CS50 SQL + Khan<br/>Bases de Datos"]:::prog
+  P5["P5 · 6.046J<br/>Algoritmos Avanzados"]:::prog
+  P6["P6 · 6.034 + 6.036<br/>IA y ML"]:::prog
+  P7["P7 · Rust · TS · Java<br/>Continuo"]:::prog
+  P8["P8 · 18.404J<br/>Teoría de la Computación"]:::prog
+
+  M6["M6 · 6.042J<br/>Discretas"]:::math
+
+  P0 --> P1
+  P0 --> P2
+  P0 --> P4
+  P1 --> P15
+  P2 --> P3
+  P3 --> P35
+  P2 --> P5
+  P2 --> P6
+  P2 --> P7
+  P2 --> P8
+  M6 --> P2
+
+  classDef math fill:#eaf1fb,stroke:#1e5fb4,color:#1e5fb4,stroke-width:1.5px
+  classDef prog fill:#fdece3,stroke:#c2410c,color:#c2410c,stroke-width:1.5px
+</pre>
+</div>
+<p class="diagram-caption">6.042J (matemáticas discretas) es correq. de 6.006. Aparece aquí como nodo puente.</p>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="diagrama">4. Diagrama integrado de dependencias</h2>
+<p class="meta">Vista única de las tres rutas con sus cruces reales. Los nodos morados son fases puente.</p>
+
+<div class="diagram-box">
+<pre class="mermaid">
+graph TD
+  subgraph MAT["Matemáticas"]
+    M0["M0 · Nivelación"]:::math
+    M1["M1 · 18.01SC"]:::math
+    M2["M2 · 18.02SC"]:::math
+    M3["M3 · 18.06SC"]:::math
+    M4["M4 · 18.03"]:::math
+    M5["M5 · 18.05"]:::math
+    M6["M6 · 6.042J"]:::math
+    M65["M6.5 · Demostraciones"]:::bridge
+    M7["M7 · 18.100A"]:::math
+    M8["M8 · 18.701"]:::math
+    M9["M9 · 18.335J"]:::math
+  end
+
+  subgraph PHY["Física"]
+    F1["F1 · 8.01SC"]:::phys
+    F2["F2 · 8.02"]:::phys
+    F3["F3 · 8.03SC"]:::phys
+    F35["F3.5 · 5.60"]:::phys
+    F4["F4 · 8.044"]:::phys
+    F45["F4.5 · 8.04x"]:::bridge
+    F5["F5 · 8.04"]:::phys
+    F6["F6 · 8.033"]:::phys
+    F7["F7 · 8.05"]:::phys
+    F8["F8 · 8.09"]:::phys
+  end
+
+  subgraph PRG["Programación"]
+    P0["P0 · 6.0001"]:::prog
+    P1["P1 · CS50x C"]:::prog
+    P15["P1.5 · C++"]:::prog
+    P2["P2 · 6.006"]:::prog
+    P3["P3 · 6.033"]:::prog
+    P35["P3.5 · 6.02"]:::prog
+    P4["P4 · SQL"]:::prog
+    P5["P5 · 6.046J"]:::prog
+    P6["P6 · IA + ML"]:::prog
+    P7["P7 · Rust / TS / Java"]:::prog
+    P8["P8 · 18.404J"]:::prog
+  end
+
+  %% Matemáticas internas
+  M0 --> M1 --> M2
+  M2 --> M3
+  M2 --> M4
+  M2 --> M5
+  M2 --> M6
+  M6 --> M65
+  M65 --> M7
+  M65 --> M8
+  M3 --> M8
+  M3 --> M9
+  M4 --> M9
+
+  %% Física internas
+  F1 --> F2
+  F2 --> F3
+  F2 --> F35
+  F3 --> F4
+  F35 --> F4
+  F3 --> F45
+  F45 --> F5
+  F5 --> F6
+  F5 --> F7
+  F3 --> F8
+
+  %% Programación internas
+  P0 --> P1
+  P0 --> P2
+  P0 --> P4
+  P1 --> P15
+  P2 --> P3
+  P3 --> P35
+  P2 --> P5
+  P2 --> P6
+  P2 --> P7
+  P2 --> P8
+
+  %% Cruces entre rutas
+  M1 --> F1
+  M2 --> F2
+  M4 --> F3
+  M5 --> F4
+  M3 --> F5
+  M2 --> F35
+  M6 --> P2
+  M3 --> P6
+  M5 --> P6
+  P0 --> M9
+
+  classDef math fill:#eaf1fb,stroke:#1e5fb4,color:#1e5fb4,stroke-width:1.5px
+  classDef phys fill:#e6f4ef,stroke:#12805c,color:#12805c,stroke-width:1.5px
+  classDef prog fill:#fdece3,stroke:#c2410c,color:#c2410c,stroke-width:1.5px
+  classDef bridge fill:#f3e8ff,stroke:#7c3aed,color:#7c3aed,stroke-width:1.5px
+
+  style MAT fill:#f8fafc,stroke:#1e5fb4,stroke-width:1px
+  style PHY fill:#f8fafc,stroke:#12805c,stroke-width:1px
+  style PRG fill:#f8fafc,stroke:#c2410c,stroke-width:1px
+</pre>
+</div>
+<p class="diagram-caption">Si el grafo se ve muy denso en pantalla, ábrelo en un visor Mermaid a pantalla completa (mermaid.live) pegando el mismo bloque.</p>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="mensual">5. Plan mensual (primeros 24 meses)</h2>
+<p class="meta">Ritmo realista a 8–10 h/semana con tres rutas en paralelo. Los primeros 24 meses son de <strong>nivelación y fundamentos</strong>: la especialización avanzada empieza después del mes 24.</p>
+
+<table>
+  <thead>
+    <tr><th>Mes</th><th><span class="badge b-math">Matemáticas</span></th><th><span class="badge b-phys">Física</span></th><th><span class="badge b-prog">Programación</span></th><th>Hito / Evaluación</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1–3</td><td>Khan Academy: Aritmética → Álgebra I</td><td>—</td><td>6.0001 (P0)</td><td>Completar Álgebra I + primer script en Python</td></tr>
+    <tr><td>4–6</td><td>Khan Academy: Álgebra II → Trigonometría</td><td>—</td><td>6.0001 (fin) + CS50x (inicio C)</td><td>Completar Trigonometría + CS50x semana 3</td></tr>
+    <tr><td>7–9</td><td>18.01SC (inicio)</td><td>8.01SC (inicio: cinemática)</td><td>CS50x (C, memoria)</td><td>Problem Set 1 de 18.01 + CS50x semana 5</td></tr>
+    <tr><td>10–12</td><td>18.01SC (mitad)</td><td>8.01SC (Newton, energía)</td><td>P1.5 C++ (inicio) + 6.042J (inicio)</td><td>Examen 1 de 18.01 + PS1 de 6.042J</td></tr>
+    <tr><td>13–15</td><td>18.01SC (fin)</td><td>8.01SC (rotación)</td><td>P1.5 C++ (fin) + 6.042J (mitad)</td><td>Examen final 18.01 + PS4 de 6.042J</td></tr>
+    <tr><td>16–18</td><td>18.02SC (inicio)</td><td>8.01SC (fin)</td><td>6.042J (fin) + 6.006 (inicio)</td><td>Quiz 1 de 8.01 + PS6 de 6.042J</td></tr>
+    <tr><td>19–21</td><td>18.02SC (mitad)</td><td>8.02 (inicio: electrostática)</td><td>6.006 (mitad)</td><td>Examen 2 de 18.02 + PS8 de 6.006</td></tr>
+    <tr><td>22–24</td><td>18.02SC (fin)</td><td>8.02 (magnetismo)</td><td>6.006 (fin) + CS50 SQL (inicio)</td><td>Final 18.02 + proyecto SQL</td></tr>
+  </tbody>
+</table>
+
+<div class="callout info">
+  <strong>Después del mes 24:</strong> entran M6.5 (demostraciones), M3 (álgebra lineal), M4 (EDO), M5 (probabilidad),
+  F3 (ondas), F3.5 (termodinámica), P3 (sistemas), P3.5 (redes) y P5 (algoritmos avanzados). El plan avanza
+  entonces en ciclos de 6–12 meses por fase hasta cerrar las tres rutas.
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="catalogo">6. Catálogo de opciones por tema</h2>
+
+<h3><span class="badge b-math">Matemáticas</span></h3>
+<table class="math">
+  <thead><tr><th>Tema</th><th>Curso principal</th><th>Sustitutos (máx. 3)</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td>Cálculo I</td><td>18.01SC</td><td>18.01 (Fall 2006), Calculus Revisited</td><td>18.01SC es OCW Scholar: diseñado para autodidactas</td></tr>
+    <tr><td>Cálculo II</td><td>18.02SC</td><td>18.02 (Fall 2007)</td><td>18.02SC es más completo (videos + notas)</td></tr>
+    <tr><td>Álgebra Lineal</td><td>18.06SC</td><td>18.700 (teórico)</td><td>18.06SC incluye problem-solving help</td></tr>
+    <tr><td>EDO</td><td>18.03</td><td>18.034 (Honors)</td><td>18.03 con notas y ejercicios abundantes</td></tr>
+    <tr><td>Probabilidad</td><td>18.05</td><td>6.041</td><td>18.05 es más accesible desde cero</td></tr>
+    <tr><td>Discretas</td><td>6.042J</td><td>18.310</td><td>6.042J es correq. de 6.006</td></tr>
+    <tr><td><strong>Demostraciones</strong></td><td>Book of Proof (Hammack)</td><td>How to Prove It (Velleman), Proofs (Cummings, gratis)</td><td>Puente obligatorio antes de 18.100A y 18.701</td></tr>
+    <tr><td>Análisis Real</td><td>18.100A</td><td>18.100B</td><td>18.100A es menos abstracto; requiere M6.5</td></tr>
+    <tr><td>Álgebra Abstracta</td><td>18.701</td><td>18.702</td><td>Requiere madurez matemática previa (M6.5)</td></tr>
+    <tr><td>Métodos Numéricos</td><td>18.335J</td><td>—</td><td>Requiere Python/MATLAB</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="badge b-phys">Física</span></h3>
+<table class="phys">
+  <thead><tr><th>Tema</th><th>Curso principal</th><th>Sustitutos (máx. 3)</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td>Mecánica Clásica</td><td>8.01SC</td><td>8.012 (más avanzado)</td><td>8.01SC: 220 videos cortos + PS</td></tr>
+    <tr><td>Electromagnetismo</td><td>8.02</td><td>8.02x (edX, audit gratis)</td><td>8.02 de Walter Lewin es icónico</td></tr>
+    <tr><td>Ondas</td><td>8.03SC</td><td>—</td><td>Requiere EDO (18.03)</td></tr>
+    <tr><td><strong>Termodinámica</strong></td><td>5.60 Thermodynamics &amp; Kinetics</td><td>OpenStax Thermodynamics, MIT 5.60 (OCW)</td><td>Fase añadida; cubre termo clásica antes de estadística</td></tr>
+    <tr><td>Física Estadística</td><td>8.044</td><td>—</td><td>Requiere probabilidad (18.05) y termo (5.60)</td></tr>
+    <tr><td><strong>Física Moderna puente</strong></td><td>8.04x (edX, audit)</td><td>OpenStax University Physics Vol. 3</td><td>Suaviza el salto 8.03 → 8.04 desde cero</td></tr>
+    <tr><td>Cuántica I</td><td>8.04</td><td>—</td><td>Requiere álgebra lineal y EDO</td></tr>
+    <tr><td>Cuántica II</td><td>8.05</td><td>—</td><td>Secuencia natural de 8.04</td></tr>
+    <tr><td>Relatividad</td><td>8.033</td><td>—</td><td>Requiere electromagnetismo</td></tr>
+    <tr><td>Mecánica Avanzada</td><td>8.09</td><td>—</td><td>Requiere 8.03</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="badge b-prog">Programación</span></h3>
+<table class="prog">
+  <thead><tr><th>Tema</th><th>Curso principal</th><th>Sustitutos (máx. 3)</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td>Python</td><td>6.0001</td><td>CS50x (Python)</td><td>Estándar de MIT, ideal para empezar</td></tr>
+    <tr><td>C</td><td>CS50x (sem. 1–5)</td><td>freeCodeCamp C Course</td><td>CS50x es más completo y con labs</td></tr>
+    <tr><td><strong>C++</strong></td><td>LearnCpp.com</td><td>C++ Core Guidelines, cppreference tutorial</td><td>Fase añadida; prereq. natural para sistemas y ML de alto rendimiento</td></tr>
+    <tr><td>Algoritmos</td><td>6.006</td><td>6.046J</td><td>6.006 usa Python</td></tr>
+    <tr><td>Sistemas</td><td>6.033</td><td>6.004</td><td>Más ligero que 6.828 (apto para 4 GB RAM)</td></tr>
+    <tr><td><strong>Redes</strong></td><td>6.02 Introduction to EECS II</td><td>Kurose/Ross (YouTube), MOOC de redes</td><td>Fase añadida; complementa a 6.033</td></tr>
+    <tr><td>SQL</td><td>CS50 SQL + Khan Academy</td><td>W3Schools SQL</td><td>Khan Academy es interactivo</td></tr>
+    <tr><td>IA</td><td>6.034</td><td>—</td><td>Curso clásico pero completo</td></tr>
+    <tr><td>ML</td><td>6.036</td><td>—</td><td>Requiere Python, <strong>18.05 y 18.06</strong></td></tr>
+    <tr><td>Teoría Computación</td><td>18.404J</td><td>6.045J</td><td>18.404J es el estándar</td></tr>
+    <tr><td>Rust</td><td>Comprehensive Rust (Google)</td><td>The Rust Book</td><td>100% gratis, en línea</td></tr>
+    <tr><td>TypeScript</td><td>TypeScript Handbook oficial</td><td>Total TypeScript (free), Full Stack Open (módulos TS)</td><td>Se reemplazó Scrimba por tener partes de pago</td></tr>
+    <tr><td>Java</td><td>MOOC.fi Java Programming</td><td>Oracle Java Tutorials</td><td>MOOC.fi es curso completo y gratis</td></tr>
+  </tbody>
+</table>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="proyectos">7. Proyectos prácticos (fuera del tiempo de estudio)</h2>
+<table>
+  <thead><tr><th>Fase</th><th>Proyecto</th><th>Habilidad ejercitada</th></tr></thead>
+  <tbody>
+    <tr><td><span class="pill">P0</span></td><td>Script de finanzas personales en Python</td><td>Variables, loops, funciones</td></tr>
+    <tr><td><span class="pill">P1</span></td><td>Implementar una lista enlazada en C</td><td>Punteros, gestión de memoria</td></tr>
+    <tr><td><span class="pill">P1.5</span></td><td>Reimplementar la lista enlazada en C++ con RAII</td><td>Constructores, destructores, smart pointers</td></tr>
+    <tr><td><span class="pill">P2</span></td><td>Visualizador de algoritmos de sorting</td><td>Algoritmos, complejidad</td></tr>
+    <tr><td><span class="pill">P3</span></td><td>Servidor HTTP mínimo en C</td><td>Sockets, procesos, sistemas</td></tr>
+    <tr><td><span class="pill">P3.5</span></td><td>Cliente/servidor TCP con protocolo propio</td><td>Redes, serialización</td></tr>
+    <tr><td><span class="pill">P4</span></td><td>Base de datos relacional para un dominio propio</td><td>SQL, modelado, índices</td></tr>
+    <tr><td><span class="pill">P6</span></td><td>Regresión lineal desde cero + validación cruzada</td><td>ML, álgebra lineal, probabilidad</td></tr>
+    <tr><td><span class="pill">M6.5</span></td><td>Demostrar 20 teoremas clásicos por escrito</td><td>Lógica, redacción matemática</td></tr>
+    <tr><td><span class="pill">F5</span></td><td>Simulación numérica de la ecuación de Schrödinger 1D</td><td>EDO, métodos numéricos, cuántica</td></tr>
+  </tbody>
+</table>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="hitos">8. Hitos obligatorios</h2>
+<ul>
+  <li><strong>Mes 6:</strong> resolver ecuaciones de segundo grado, factorizar, manejar trigonometría básica y escribir un script de 100+ líneas en Python.</li>
+  <li><strong>Mes 12:</strong> aprobar el examen final de 18.01SC y el Quiz 1 de 8.01SC. Escribir un programa en C que use punteros y malloc.</li>
+  <li><strong>Mes 24:</strong> aprobar 18.02SC, terminar 6.006 y 6.042J, completar CS50x. Escribir un programa en C++ con clases y herencia.</li>
+  <li><strong>Mes 36:</strong> terminar M6.5 (demostraciones) y M3 (álgebra lineal). Haber escrito 20 demostraciones formales. Aprobar 8.02.</li>
+  <li><strong>Mes 48:</strong> terminar M4 (EDO), M5 (probabilidad), F3 (ondas), F3.5 (termo). Implementar un servidor HTTP en C.</li>
+  <li><strong>Mes 60:</strong> terminar F4 (estadística), F4.5 (puente), iniciar F5 (cuántica). Terminar P5 (algoritmos avanzados) y P8 (teoría).</li>
+  <li><strong>Mes 72:</strong> iniciar M7 (análisis real) y M8 (álgebra abstracta). Terminar F5, F6, F7. Cerrar rutas troncales.</li>
+  <li><strong>Mes 84–96:</strong> cerrar M7, M8, M9, F8, P6, P7. Redactar un proyecto final integrador por ruta.</li>
+</ul>
+
+<!-- ══════════════════════════════════════════ -->
+<h2 id="enlaces">9. Enlaces verificados</h2>
+<ul>
+  <li><strong>MIT OCW</strong> — <a href="https://ocw.mit.edu/">https://ocw.mit.edu/</a></li>
+  <li>18.01SC — <a href="https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/">ocw.mit.edu/courses/18-01sc</a></li>
+  <li>18.02SC — <a href="https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/">ocw.mit.edu/courses/18-02sc</a></li>
+  <li>18.06SC — <a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/">ocw.mit.edu/courses/18-06sc</a></li>
+  <li>18.03 — <a href="https://ocw.mit.edu/courses/18-03-differential-equations-spring-2010/">ocw.mit.edu/courses/18-03</a></li>
+  <li>18.05 — <a href="https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2014/">ocw.mit.edu/courses/18-05</a></li>
+  <li>6.042J — <a href="https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2010/">ocw.mit.edu/courses/6-042j</a></li>
+  <li>18.100A — <a href="https://ocw.mit.edu/courses/18-100a-real-analysis-fall-2020/">ocw.mit.edu/courses/18-100a</a></li>
+  <li>18.701 — <a href="https://ocw.mit.edu/courses/18-701-algebra-i-fall-2010/">ocw.mit.edu/courses/18-701</a></li>
+  <li>18.335J — <a href="https://ocw.mit.edu/courses/18-335j-introduction-to-numerical-methods-spring-2019/">ocw.mit.edu/courses/18-335j</a></li>
+  <li>8.01SC — <a href="https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/">ocw.mit.edu/courses/8-01sc</a></li>
+  <li>8.02 — <a href="https://ocw.mit.edu/courses/8-02-physics-ii-electricity-and-magnetism-spring-2007/">ocw.mit.edu/courses/8-02</a></li>
+  <li>8.03SC — <a href="https://ocw.mit.edu/courses/8-03sc-physics-iii-vibrations-and-waves-fall-2016/">ocw.mit.edu/courses/8-03sc</a></li>
+  <li>5.60 — <a href="https://ocw.mit.edu/courses/5-60-thermodynamics-kinetics-spring-2008/">ocw.mit.edu/courses/5-60</a></li>
+  <li>8.044 — <a href="https://ocw.mit.edu/courses/8-044-statistical-physics-i-spring-2013/">ocw.mit.edu/courses/8-044</a></li>
+  <li>8.04 — <a href="https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/">ocw.mit.edu/courses/8-04</a></li>
+  <li>8.05 — <a href="https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/">ocw.mit.edu/courses/8-05</a></li>
+  <li>8.033 — <a href="https://ocw.mit.edu/courses/8-033-relativity-fall-2006/">ocw.mit.edu/courses/8-033</a></li>
+  <li>8.09 — <a href="https://ocw.mit.edu/courses/8-09-classical-mechanics-iii-fall-2014/">ocw.mit.edu/courses/8-09</a></li>
+  <li>6.0001 — <a href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/">ocw.mit.edu/courses/6-0001</a></li>
+  <li>6.006 — <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/">ocw.mit.edu/courses/6-006</a></li>
+  <li>6.033 — <a href="https://ocw.mit.edu/courses/6-033-computer-system-engineering-spring-2018/">ocw.mit.edu/courses/6-033</a></li>
+  <li>6.02 — <a href="https://ocw.mit.edu/courses/6-02-introduction-to-eecs-ii-digital-communication-systems-fall-2012/">ocw.mit.edu/courses/6-02</a></li>
+  <li>6.046J — <a href="https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/">ocw.mit.edu/courses/6-046j</a></li>
+  <li>6.034 — <a href="https://ocw.mit.edu/courses/6-034-artificial-intelligence-fall-2010/">ocw.mit.edu/courses/6-034</a></li>
+  <li>6.036 — <a href="https://ocw.mit.edu/courses/6-036-introduction-to-machine-learning-fall-2020/">ocw.mit.edu/courses/6-036</a></li>
+  <li>18.404J — <a href="https://ocw.mit.edu/courses/18-404j-theory-of-computation-fall-2020/">ocw.mit.edu/courses/18-404j</a></li>
+  <li>CS50x — <a href="https://cs50.harvard.edu/x/">cs50.harvard.edu/x</a></li>
+  <li>CS50 SQL — <a href="https://cs50.harvard.edu/sql/">cs50.harvard.edu/sql</a></li>
+  <li>Khan Academy — <a href="https://es.khanacademy.org/">es.khanacademy.org</a></li>
+  <li>LearnCpp — <a href="https://www.learncpp.com/">learncpp.com</a></li>
+  <li>Comprehensive Rust — <a href="https://google.github.io/comprehensive-rust/">google.github.io/comprehensive-rust</a></li>
+  <li>TypeScript Handbook — <a href="https://www.typescriptlang.org/docs/handbook/intro.html">typescriptlang.org/docs/handbook</a></li>
+  <li>MOOC.fi Java — <a href="https://java-programming.mooc.fi/">java-programming.mooc.fi</a></li>
+  <li>Book of Proof — <a href="https://www.people.vcu.edu/~rhammack/BookOfProof/">people.vcu.edu/~rhammack/BookOfProof</a></li>
+  <li>OpenStax University Physics — <a href="https://openstax.org/details/books/university-physics-volume-3">openstax.org</a></li>
+  <li>Mermaid Live Editor — <a href="https://mermaid.live/">mermaid.live</a></li>
+</ul>
+
+<footer>
+  <p>Plan generado como referencia personal. Verifica cada enlace antes de usarlo y ajusta el ritmo según tu
+  disponibilidad real. No sustituye una malla curricular oficial.</p>
+</footer>
+
+</div>
+
+<!-- ── Mermaid: carga desde CDN y renderiza los bloques <pre class="mermaid"> ── -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      fontSize: '13px',
+      lineColor: '#94a3b8',
+      primaryTextColor: '#1f2937'
+    },
+    flowchart: {
+      curve: 'basis',
+      nodeSpacing: 32,
+      rankSpacing: 48,
+      padding: 12,
+      useMaxWidth: true
+    }
+  });
+</script>
+</body>
+</html>
